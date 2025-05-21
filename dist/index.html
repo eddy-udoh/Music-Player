@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Player</title>
+  <link href="output.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Manrope:wght@200..800&family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/66181f234a.js" crossorigin="anonymous"></script>
+</head>
+<body class="font-[Poppins]">
+  <div class="w-full h-screen bg-[#333] flex flex-wrap justify-center items-center">
+    <div class="w-[400px] py-[25px] px-[25px] text-center bg-[#ffe0e5] rounded-2xl shadow-lg">
+      
+      <nav class="flex justify-between mb-[30px]">
+        <div class="rounded-full w-[40px] h-[40px] bg-white text-[#f53192] leading-[40px] shadow-[0px_5px_10px_rgba(255,26,26,0.22)] flex items-center justify-center">
+          <i class="fa-solid fa-angle-left"></i>
+        </div>
+        <div class="rounded-full w-[40px] h-[40px] bg-white text-[#f53192] leading-[40px] shadow-[0px_5px_10px_rgba(255,26,26,0.22)] flex items-center justify-center">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+      </nav>
+
+      <img src="media/thumbnail.png" alt="Song cover image" class="w-[220px] rounded-full border-[8px] border-white shadow-[0px_10px_60px_rgba(255,26,26,0.22)] mx-auto">
+      <h1 class="font-[20px] font-normal text-[#333] mt-[20px] ">Despacito</h1>
+      <p class="font-[14px] text-#333">Luis Fonsi Ft. Puerto Rican</p>
+
+      <audio  id="song">
+        <source src="media/Feels Like Yesterday - Ryan Stasik, Kanika Moore.mp3" type="audio/mpeg">
+        
+      </audio>
+      <input type="range" value="0" id="progress">
+
+      <div class="flex justify-center items-center">
+        <div class=" w-[60px] h-[60px] bg-white m-[20px] inline-flex items-center justify-center rounded-full text-[#f53192] shadow-[0_10px_20px_rgba(225,26,26,0.22)] cursor-pointer"><i class="fa-solid fa-backward"></i></div>
+        <div onclick="playPause()" class=" w-[60px] h-[60px] bg-[#f53192] m-[20px] inline-flex items-center justify-center rounded-full text-white shadow-[0_10px_20px_rgba(225,26,26,0.22)] cursor-pointer hover:scale-150"><i class="fa-solid fa-play " id="ctrlIcon"></i></div> 
+        <div class=" w-[60px] h-[60px] bg-white m-[20px] inline-flex items-center justify-center rounded-full text-[#f53192] shadow-[0_10px_20px_rgba(225,26,26,0.22)] cursor-pointer"><i class="fa-solid fa-forward"></i></div> 
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let progress = document.getElementById("progress");
+    let song = document.querySelector("audio");
+    let ctrlIcon = document.getElementById("ctrlIcon");
+
+    song.onloadedmetadata = function() {
+      progress.max = song.duration;
+      progress.value = song.currentTime;
+    }
+
+    function playPause(){
+        if(ctrlIcon.classList.contains("fa-pause")){
+            song.pause();
+            ctrlIcon.classList.remove("fa-pause");
+            ctrlIcon.classList.add("fa-play");
+
+        }else{  
+            song.play();
+            ctrlIcon.classList.add("fa-pause");
+            ctrlIcon.classList.remove("fa-play");
+        }
+    }
+
+    if (song.play()) {
+        setInterval(() => {
+            progress.value = song.currentTime;
+        }, 500);
+    }
+
+    progress.onchange = function() {
+        song.play();
+        song.currentTime = progress.value;
+        ctrlIcon.classList.add("fa-pause");
+        ctrlIcon.classList.remove("fa-play");
+    }
+  </script>
+</body>
+</html>
